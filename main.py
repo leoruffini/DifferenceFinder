@@ -1,5 +1,4 @@
 # main.py
-
 import os
 import tempfile
 import shutil
@@ -8,6 +7,8 @@ from fastapi.responses import JSONResponse
 from docx import Document
 import openai
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,6 +20,14 @@ if not OPENAI_API_KEY:
 openai.api_key = OPENAI_API_KEY
 
 app = FastAPI(title="DOCX Difference Highlighter")
+
+# Mount the static directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Serve index.html at the root URL
+@app.get("/")
+async def read_root():
+    return FileResponse('static/index.html')
 
 class DocumentProcessor:
     """
