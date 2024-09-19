@@ -1,0 +1,12 @@
+/* styles.css */
+
+/* Center the loader */
+#loader {
+    margin-top: 50px;
+}
+
+/* Add some margin to the differences list */
+#differences-list {
+    max-height: 60vh;
+    overflow-y: auto;
+}

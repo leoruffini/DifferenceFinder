@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+python-docx
+openai
+aiofiles
+python-dotenv

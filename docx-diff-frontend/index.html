@@ -1,0 +1,93 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCX Difference Highlighter</title>
+    <!-- Materialize CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <h3 class="center-align">DOCX Difference Highlighter</h3>
+
+        <div class="row">
+            <!-- File Uploads -->
+            <form id="upload-form" class="col s12">
+                <div class="row">
+                    <div class="file-field input-field col s12 m6">
+                        <div class="btn">
+                            <span>File 1</span>
+                            <input type="file" id="file1" accept=".docx" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Upload first DOCX file">
+                        </div>
+                    </div>
+
+                    <div class="file-field input-field col s12 m6">
+                        <div class="btn">
+                            <span>File 2</span>
+                            <input type="file" id="file2" accept=".docx" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Upload second DOCX file">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row center-align">
+                    <button class="btn waves-effect waves-light" type="submit" id="compare-btn">
+                        Compare
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Loader -->
+        <div class="row" id="loader" style="display: none;">
+            <div class="preloader-wrapper active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Differences -->
+        <div class="row" id="differences-section" style="display: none;">
+            <h5>Differences:</h5>
+            <ul class="collection" id="differences-list">
+                <!-- Differences will be appended here -->
+            </ul>
+        </div>
+
+        <!-- Error Message -->
+        <div class="row" id="error-message" style="display: none;">
+            <div class="card red lighten-4">
+                <div class="card-content red-text">
+                    <span class="card-title">Error</span>
+                    <p id="error-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Materialize JS and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+    <!-- Custom JS -->
+    <script src="script.js" defer></script>
+</body>
+</html>
