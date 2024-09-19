@@ -4,3 +4,4 @@ python-docx
 openai
 aiofiles
 python-dotenv
+python-multipart
