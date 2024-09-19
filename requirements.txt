@@ -5,3 +5,4 @@ openai
 aiofiles
 python-dotenv
 python-multipart
+aiofiles==0.8.0
