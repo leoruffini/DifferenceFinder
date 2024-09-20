@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('file2', file2);
 
         try {
-            const response = await fetch('/compare-docs/', {
+            const response = await fetch('/compare-docs/', {  // Changed from '/compare-docx/'
                 method: 'POST',
                 body: formData
             });

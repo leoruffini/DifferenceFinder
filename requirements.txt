@@ -6,5 +6,5 @@ openai
 python-dotenv
 aiofiles
 langchain
+langchain-community
 pypdf
-aiofiles==0.8.0

@@ -1,12 +1,118 @@
-/* styles.css */
-
-/* Center the loader */
-#loader {
-    margin-top: 50px;
-}
-
-/* Add some margin to the differences list */
-#differences-list {
-    max-height: 60vh;
-    overflow-y: auto;
-}
+:root {
+    --primary-color: #007AFF;
+    --background-color: #F5F5F7;
+    --text-color: #1D1D1F;
+    --border-color: #D2D2D7;
+    --error-color: #FF3B30;
+  }
+  
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  }
+  
+  .container {
+    max-width: 960px;
+    padding: 2rem;
+  }
+  
+  .app-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 3rem;
+    letter-spacing: -0.5px;
+  }
+  
+  .app-title span {
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+  
+  /* File input styles */
+  .file-field .btn {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 24px;
+    padding: 0 16px;
+  }
+  
+  .file-field .btn:hover {
+    background-color: rgba(0, 122, 255, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.4);
+  }
+  
+  .file-path-wrapper {
+    overflow: hidden;
+    padding-left: 10px;
+  }
+  
+  /* Button styles */
+  .btn, .btn-large {
+    background-color: var(--primary-color);
+    border-radius: 24px;
+    text-transform: none;
+    font-weight: 500;
+    padding: 0 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .btn:hover, .btn-large:hover {
+    background-color: rgba(0, 122, 255, 0.8); /* More transparent primary color */
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.4);
+  }
+  
+  .btn:focus, .btn-large:focus {
+    background-color: var(--primary-color);
+  }
+  
+  /* Loader styles */
+  #loader {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  /* Differences section styles */
+  #differences-section {
+    margin-top: 2rem;
+  }
+  
+  .collection {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
+  
+  /* Error message styles */
+  #error-message .card {
+    background-color: #FFF5F5;
+    border: 1px solid var(--error-color);
+    border-radius: 4px;
+  }
+  
+  #error-message .card-content {
+    color: var(--error-color);
+  }
+  
+  /* Footer styles */
+  .page-footer {
+    background-color: transparent;
+    color: #8E8E93;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .footer-signature {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .footer-signature span {
+    color: var(--primary-color);
+  }
