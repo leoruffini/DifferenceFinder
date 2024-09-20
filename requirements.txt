@@ -1,8 +1,10 @@
 fastapi
 uvicorn
+python-multipart
 python-docx
 openai
-aiofiles
 python-dotenv
-python-multipart
+aiofiles
+langchain
+pypdf
 aiofiles==0.8.0

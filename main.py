@@ -9,6 +9,8 @@ import openai
 from dotenv import load_dotenv
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitter import CharacterTextSplitter
 
 # Load environment variables from .env file
 load_dotenv()
@@ -31,7 +33,7 @@ async def read_root():
 
 class DocumentProcessor:
     """
-    Handles the processing of DOCX files.
+    Handles the processing of DOCX and PDF files.
     """
 
     def __init__(self, file: UploadFile):
@@ -44,7 +46,8 @@ class DocumentProcessor:
         Returns the path to the temporary file.
         """
         try:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".docx") as tmp:
+            suffix = ".docx" if self.file.content_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' else ".pdf"
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                 shutil.copyfileobj(self.file.file, tmp)
                 temp_path = tmp.name
             return temp_path
@@ -53,14 +56,19 @@ class DocumentProcessor:
 
     def extract_text(self, file_path: str) -> str:
         """
-        Extracts text from a DOCX file.
+        Extracts text from a DOCX or PDF file.
         """
         try:
-            doc = Document(file_path)
-            full_text = []
-            for para in doc.paragraphs:
-                full_text.append(para.text)
-            return "\n".join(full_text)
+            if file_path.endswith('.docx'):
+                doc = Document(file_path)
+                full_text = [para.text for para in doc.paragraphs]
+                return "\n".join(full_text)
+            elif file_path.endswith('.pdf'):
+                loader = PyPDFLoader(file_path)
+                pages = loader.load_and_split()
+                text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+                texts = text_splitter.split_documents(pages)
+                return "\n".join([t.page_content for t in texts])
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error extracting text: {e}")
 
@@ -142,19 +150,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/compare-docx/", summary="Compare two DOCX files and return differences.")
-async def compare_docx(file1: UploadFile = File(..., description="First DOCX file"), 
-                      file2: UploadFile = File(..., description="Second DOCX file")):
+@app.post("/compare-docs/", summary="Compare two DOCX or PDF files and return differences.")
+async def compare_docs(file1: UploadFile = File(..., description="First DOCX or PDF file"), 
+                       file2: UploadFile = File(..., description="Second DOCX or PDF file")):
     """
-    Endpoint to compare two DOCX files and return the differences as a JSON response.
+    Endpoint to compare two DOCX or PDF files and return the differences as a JSON response.
     """
-    print("Received request to compare DOCX files")  # Add this line
+    print("Received request to compare documents")
 
     # Validate file types
-    if file1.content_type != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-        raise HTTPException(status_code=400, detail="file1 must be a .docx file.")
-    if file2.content_type != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-        raise HTTPException(status_code=400, detail="file2 must be a .docx file.")
+    allowed_types = ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf']
+    if file1.content_type not in allowed_types:
+        raise HTTPException(status_code=400, detail="file1 must be a .docx or .pdf file.")
+    if file2.content_type not in allowed_types:
+        raise HTTPException(status_code=400, detail="file2 must be a .docx or .pdf file.")
 
     # Process both documents
     processor1 = DocumentProcessor(file1)
