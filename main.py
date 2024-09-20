@@ -148,6 +148,7 @@ async def compare_docx(file1: UploadFile = File(..., description="First DOCX fil
     """
     Endpoint to compare two DOCX files and return the differences as a JSON response.
     """
+    print("Received request to compare DOCX files")  # Add this line
 
     # Validate file types
     if file1.content_type != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':

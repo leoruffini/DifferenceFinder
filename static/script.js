@@ -40,20 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('file2', file2);
 
         try {
-            const response = await fetch('http://localhost:8000/compare-docx/', {
+            const response = await fetch('/compare-docx/', {
                 method: 'POST',
                 body: formData
             });
 
-            const result = await response.json();
-
-            if (response.ok) {
-                displayDifferences(result.differences);
-            } else {
-                showError(result.detail || 'An error occurred while comparing the documents.');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+
+            const result = await response.json();
+            displayDifferences(result.differences);
         } catch (error) {
-            showError('Failed to connect to the server. Please ensure the backend is running.');
+            showError('An error occurred while comparing the documents. Please try again.');
             console.error('Error:', error);
         } finally {
             // Hide loader
