@@ -116,3 +116,25 @@
   .footer-signature span {
     color: var(--primary-color);
   }
+  
+  /* Info panel styles */
+  .info-panel {
+    background-color: #F0F8FF;  /* Light blue background */
+    border-left: 4px solid var(--primary-color);
+    margin-bottom: 2rem;
+  }
+
+  .info-panel h5 {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-top: 0;
+  }
+
+  .info-panel p, .info-panel ol {
+    color: var(--text-color);
+    font-size: 1rem;
+  }
+
+  .info-panel ol {
+    padding-left: 1.5rem;
+  }
